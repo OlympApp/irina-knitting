@@ -125,7 +125,7 @@ export default function Home() {
           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
           gap: 1.5rem;
           max-width: 1300px; margin: 0 auto;
-        }
+      }
 
         /* CARD */
         .card {
@@ -286,8 +286,7 @@ export default function Home() {
                 key={work.id}
                 id={work.id}
                 href={`/works/${work.id}`}
-                className={`card work-card${idx === 0 && filtered.length > 1 ? ' card-featured' : ''}${visible.has(work.id) ? ' visible' : ''}`}
-                style={{ transitionDelay: `${(idx % 6) * 60}ms` }}
+                className={`card work-card${visible.has(work.id) ? ' visible' : ''}`}                style={{ transitionDelay: `${(idx % 6) * 60}ms` }}
               >
                 <div className="card-img-wrap">
                   <Image
