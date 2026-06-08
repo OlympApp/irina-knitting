@@ -93,13 +93,18 @@ export default function Dashboard() {
               onChange={(e) => setTitle(e.target.value)}
               className="border border-stone-200 rounded-lg px-4 py-3 text-stone-800 focus:outline-none focus:border-stone-400"
             />
-            <input
-              type="text"
-              placeholder="Категория (свитер, шапка...)"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              className="border border-stone-200 rounded-lg px-4 py-3 text-stone-800 focus:outline-none focus:border-stone-400"
-            />
+            <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="border border-stone-200 rounded-lg px-4 py-3 text-stone-800 focus:outline-none focus:border-stone-400 bg-white"
+            >
+            <option value="">Выберите категорию</option>
+            <option value="sviter">Свитер</option>
+            <option value="shapka">Шапка</option>
+            <option value="zhilet">Жилет</option>
+            <option value="aksessuary">Аксессуары</option>
+            <option value="другое">Другое</option>
+            </select>
           </div>
 
           <textarea

@@ -5,6 +5,14 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Work } from '@/lib/supabase'
 
+const CAT_LABELS: Record<string, string> = {
+  sviter: 'Свитер',
+  shapka: 'Шапка',
+  zhilet: 'Жилет',
+  aksessuary: 'Аксессуары',
+  другое: 'Другое',
+}
+
 const CATEGORIES: { value: string; label: string }[] = [
   { value: 'all', label: 'Все работы' },
   { value: 'sviter', label: 'Свитеры' },
@@ -58,7 +66,6 @@ export default function Home() {
           --border: rgba(193,67,42,0.13);
         }
 
-        /* NAV */
         .nav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           display: flex; align-items: center; justify-content: space-between;
@@ -80,7 +87,6 @@ export default function Home() {
         }
         .nav-link:hover { background: var(--saffron); }
 
-        /* INTRO */
         .intro {
           padding: 8rem 2.5rem 3rem;
           max-width: 960px; margin: 0 auto;
@@ -99,7 +105,6 @@ export default function Home() {
           line-height: 1.8; max-width: 300px; flex-shrink: 0;
         }
 
-        /* FILTERS */
         .filters {
           display: flex; gap: 0.5rem; flex-wrap: wrap;
           padding: 0 2.5rem 2.5rem;
@@ -118,16 +123,14 @@ export default function Home() {
           background: var(--dark); border-color: var(--dark); color: #fff;
         }
 
-        /* GALLERY */
         .gallery-wrap { padding: 0 2rem 6rem; }
         .gallery-grid {
           display: grid;
           grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
           gap: 1.5rem;
           max-width: 1300px; margin: 0 auto;
-      }
+        }
 
-        /* CARD */
         .card {
           background: var(--warm-white);
           border-radius: 1rem; overflow: hidden;
@@ -140,18 +143,6 @@ export default function Home() {
         }
         .card.visible { opacity: 1; translate: 0 0; }
         .card:hover { transform: translateY(-5px); box-shadow: 0 18px 40px rgba(30,22,18,0.1); }
-
-        .card-featured {
-          grid-column: span 2;
-          flex-direction: row; align-items: stretch;
-        }
-        @media (max-width: 700px) {
-          .card-featured { grid-column: span 1; flex-direction: column; }
-        }
-        .card-featured .card-img-wrap { flex: 1.2; }
-        .card-featured .card-body { flex: 1; padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
-        .card-featured .card-title { font-size: 1.6rem; }
-        .card-featured .card-desc { -webkit-line-clamp: 6; }
 
         .card-img-wrap { overflow: hidden; background: #EDE8E0; }
         .card-img-wrap img { width: 100%; height: auto; display: block; transition: transform 0.5s; }
@@ -184,7 +175,6 @@ export default function Home() {
         }
         .card:hover .card-arrow { background: var(--terracotta); color: #fff; transform: translateX(3px); }
 
-        /* EMPTY */
         .gallery-empty {
           grid-column: 1/-1; text-align: center;
           padding: 5rem 2rem;
@@ -192,7 +182,6 @@ export default function Home() {
           font-size: 1.4rem; font-style: italic; color: #C4A882;
         }
 
-        /* CONTACT */
         .contact {
           background: var(--dark); padding: 6rem 2.5rem;
           text-align: center;
@@ -220,7 +209,6 @@ export default function Home() {
         }
         .contact-link:hover { background: var(--terracotta); border-color: var(--terracotta); }
 
-        /* FOOTER */
         .footer {
           background: var(--dark);
           border-top: 1px solid rgba(255,255,255,0.05);
@@ -238,7 +226,6 @@ export default function Home() {
         }
       `}</style>
 
-      {/* NAV */}
       <nav className="nav">
         <a href="/" className="nav-logo">
           Ирина <span>Сорокина</span>
@@ -246,21 +233,19 @@ export default function Home() {
         <a href="#kontakty" className="nav-link">Связаться</a>
       </nav>
 
-      {/* INTRO */}
       <section className="intro">
         <h1 className="intro-headline">
           Одежда,<br />
           которая <em>отражает</em><br />
           вас
         </h1>
-<p className="intro-sub">
-  Вяжу прежде всего для себя — это моё удовольствие и мой язык. Но иногда вещи находят своих людей, и это делает меня по-настоящему счастливой.
-  <br /><br />
-  Машинное вязание с программированием · Ручное спицами и крючком · Жаккард · Авторские техники
-</p>
+        <p className="intro-sub">
+          Вяжу прежде всего для себя — это моё удовольствие и мой язык. Но иногда вещи находят своих людей, и это делает меня по-настоящему счастливой.
+          <br /><br />
+          Машинное вязание с программированием · Ручное спицами и крючком · Жаккард · Авторские техники
+        </p>
       </section>
 
-      {/* FILTERS */}
       <div className="filters">
         {CATEGORIES.map(cat => (
           <button
@@ -273,7 +258,6 @@ export default function Home() {
         ))}
       </div>
 
-      {/* GALLERY */}
       <div className="gallery-wrap">
         <div className="gallery-grid">
           {filtered.length === 0 ? (
@@ -286,7 +270,8 @@ export default function Home() {
                 key={work.id}
                 id={work.id}
                 href={`/works/${work.id}`}
-                className={`card work-card${visible.has(work.id) ? ' visible' : ''}`}                style={{ transitionDelay: `${(idx % 6) * 60}ms` }}
+                className={`card work-card${visible.has(work.id) ? ' visible' : ''}`}
+                style={{ transitionDelay: `${(idx % 6) * 60}ms` }}
               >
                 <div className="card-img-wrap">
                   <Image
@@ -298,7 +283,11 @@ export default function Home() {
                   />
                 </div>
                 <div className="card-body">
-                  {work.category && <span className="card-category">{work.category}</span>}
+                  {work.category && (
+                    <span className="card-category">
+                      {CAT_LABELS[work.category] || work.category}
+                    </span>
+                  )}
                   <div className="card-title">{work.title}</div>
                   {work.description && <div className="card-desc">{work.description}</div>}
                   <div className="card-arrow">→</div>
@@ -309,7 +298,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* CONTACT */}
       <section id="kontakty" className="contact">
         <div className="contact-eyebrow">Написать мастеру</div>
         <h2 className="contact-title">
@@ -321,7 +309,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="footer">
         <span className="footer-text">© 2025 Ирина Сорокина</span>
         <span className="footer-text">Авторское вязание · Ручная работа</span>
